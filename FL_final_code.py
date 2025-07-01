@@ -102,6 +102,20 @@ class SimpleIDProtector:
 
 def dataprepration(data_path, test_size=0.2, num_clients=NUM_CLIENTS, random_state=42):
     print(f"Loading data from {data_path}...")
+    # file_path = '/content/drive/MyDrive/ET Dataset/ETdata-romania-useful.xlsm'
+    # data = pd.read_excel(file_path, sheet_name=None)  # Load all sheets into a dictionary
+    #
+    # sheets_with_student_id = []
+    #
+    # # Iterate over each sheet
+    # for sheet_name, df in data.items():
+    #     df['Student_id'] = sheet_name
+    #
+    #     sheets_with_student_id.append(df)
+    #
+    # merged_data = pd.concat(sheets_with_student_id, ignore_index=True)
+    #
+    # merged_data.head()
 
     studentidpredictiondf = pd.read_csv(data_path)
 
@@ -121,7 +135,7 @@ def dataprepration(data_path, test_size=0.2, num_clients=NUM_CLIENTS, random_sta
     studentidpredictiondf['student_id'] = dummy_student_ids
 
     # Random stratified splitting
-    print(f"\n🎯 USING RANDOM STRATIFIED SPLITTING")
+    print(f"\n USING RANDOM STRATIFIED SPLITTING")
 
     # Drop unnecessary columns
     df_processed = studentidpredictiondf.drop(columns=['game_level'], errors='ignore')
@@ -152,11 +166,9 @@ def dataprepration(data_path, test_size=0.2, num_clients=NUM_CLIENTS, random_sta
         index=X_test.index
     )
 
-    # Save preprocessing objects
     joblib.dump(scaler, 'models/student_id_feature_scaler.pkl')
     joblib.dump(label_encoder, 'models/student_id_dummy_encoder.pkl')
 
-    # Split training data among federated clients
     client_data = []
 
     for client_idx in range(num_clients):
@@ -232,7 +244,6 @@ def create_original_deep_model(input_shape, num_classes):
 
 
 def train_client_model(client_data, global_model_weights, input_shape, n_folds=NUM_FOLDS, epochs=NUM_EPOCHS):
-    """Train model on client data using cross-validation"""
 
     print(f"\nTraining client model with {len(client_data['X'])} samples...")
     X_train = client_data['X']
@@ -313,7 +324,7 @@ def aggregate_models(models, weights=None):
 
 def federated_learning(client_data, X_test, y_test, input_shape, n_rounds=NUM_ROUNDS, n_folds=NUM_FOLDS,
                        epochs=NUM_EPOCHS):
-    """Perform federated learning"""
+    """RUN federated learning"""
 
     num_clients = len(client_data)
     num_classes = max([client['num_classes'] for client in client_data])
@@ -658,14 +669,11 @@ def visualize_federated_results(round_accuracies, client_data, test_acc, model, 
     plt.savefig('results/client_data_distribution.png', dpi=300, bbox_inches='tight')
     plt.close()
 
-    # 3. Confusion matrix (percentage)
     y_pred = model.predict(X_test.values)
     y_pred_classes = np.argmax(y_pred, axis=1)
 
     plt.figure(figsize=(12, 10))
     cm = confusion_matrix(y_test, y_pred_classes)
-
-    # Convert to percentages
     cm_percentage = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis] * 100
 
     if len(cm) > 10:
@@ -693,8 +701,6 @@ def visualize_federated_results(round_accuracies, client_data, test_acc, model, 
     plt.tight_layout()
     plt.savefig('results/federated_confusion_matrix_percentage.png', dpi=300, bbox_inches='tight')
     plt.close()
-
-    # 4. Training/Validation curves for ALL clients
     if all_client_histories:
         print("\nGenerating training/validation curves for all clients...")
 
@@ -712,15 +718,12 @@ def visualize_federated_results(round_accuracies, client_data, test_acc, model, 
 
     num_classes = model.output_shape[1]
     plot_roc_curves(model, X_test, y_test, label_encoder, num_classes)
-
-    # 6. Timing analysis
     plot_timing_analysis(round_training_times, round_testing_times)
 
 
 def predict_student_id(features, model_path='models/federated_global_model.h5',
                        scaler_path='models/student_id_feature_scaler.pkl',
                        encoder_path='models/student_id_dummy_encoder.pkl'):
-    """Predict student ID for new data"""
 
     model = tf.keras.models.load_model(model_path)
     scaler = joblib.load(scaler_path)
@@ -796,8 +799,8 @@ def main():
     )
 
     print("\n How TO USE:")
-    print("   • Run '.py file' to test predictions")
-    print("   • Admin password required for original student IDs (Currently harcoded)")
+    print("   - Run '.py file' to test predictions")
+    print("   - Admin password required for original student IDs (Currently harcoded)")
 
 
 if __name__ == "__main__":
