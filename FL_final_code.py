@@ -135,7 +135,7 @@ def dataprepration(data_path, test_size=0.2, num_clients=NUM_CLIENTS, random_sta
     studentidpredictiondf['student_id'] = dummy_student_ids
 
     # Random stratified splitting
-    print(f"\n USING RANDOM STRATIFIED SPLITTING")
+    print(f"\n using Random stratified splitting")
 
     # Drop unnecessary columns
     df_processed = studentidpredictiondf.drop(columns=['game_level'], errors='ignore')
@@ -401,7 +401,7 @@ def plot_training_validation_curves(all_client_histories, round_num, client_num)
     all_val_loss = []
 
     for fold_idx, history in enumerate(client_histories):
-        if fold_idx < 3:
+        if fold_idx < len(client_histories):
             epochs = range(1, len(history['accuracy']) + 1)
 
             axes[0, 0].plot(epochs, history['accuracy'], f'C{fold_idx}-', alpha=0.7, label=f'Fold {fold_idx + 1} Train')
