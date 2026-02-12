@@ -1,8 +1,11 @@
 # safevision
 
-Person.py is the code for backtracking
+1. Person.py is the code for backtracking
+2. FL_final_code is for privacy preservation
 
-FL_final_code is for privacy preservation
+#How to run the code.
+The code is runnable on pycharm or VS Code editor using Python 3.12.6. 
+Please see the requirement file for all libraries.
 
 
 Acknowledgement
