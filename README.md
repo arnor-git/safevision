@@ -9,10 +9,9 @@ Please see the requirement file for all libraries.
 
 Below is the step-by-step guide to successfully run the code.
 1. Download this GitHub repository and open it in Pycharm editor.
-2. In pycharm terminal, install Python 3.12.6 and run the following "pip install -r requirements.txt" command to install all required packages.
-3. The dataset is already available in the directory, just update the path in both.py files.
-4. Next, in PyCharm terminal, make two 
-5. 
+2. Install Python 3.12.6 and run the following "pip install -r requirements.txt" command to install all required packages.
+3. The dataset is already available in the directory, just update the path to the dataset in both .py files.
+4. Next, just hit the run button and the program will run.
 
 
 Acknowledgement
