@@ -16,6 +16,7 @@ import pandas as pd
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import joblib
 
 # Data Preprocssing
 
@@ -81,7 +82,7 @@ import matplotlib.image as mpimg
 
 #merged_data.to_csv('/content/drive/MyDrive/ET Dataset/romania processed data with all sheets and studnet id.csv', index=False)
 
-data = pd.read_csv('/content/drive/MyDrive/privacy of students/romania processed data with all sheets and studnet id.csv')
+data = pd.read_csv('romania processed data with all sheets and studnet id.csv')
 data.head()
 
 df = pd.DataFrame(data)
@@ -120,7 +121,7 @@ features_to_normalize = ['X', 'Y', 'LeftPupilDia', 'RightPupilDia', 'HeadX', 'He
 scaler = MinMaxScaler()
 
 df[features_to_normalize] = scaler.fit_transform(df[features_to_normalize])
-joblib.dump(scaler, '/content/drive/MyDrive/privacy of students/scaler.pkl')
+joblib.dump(scaler, 'scaler.pkl')
 
 # Display the rearranged DataFrame
 df.head()
