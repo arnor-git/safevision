@@ -1,6 +1,6 @@
 # safevision
 
-1. Person.py is the code for backtracking
+1. identity_backtracking.py is the code for backtracking
 2. FL_final_code is for privacy preservation
 
 #How to run the code.
@@ -11,7 +11,7 @@ Below is the step-by-step guide to successfully run the code.
 1. Download this GitHub repository and open it in Pycharm editor.
 2. Install Python 3.12.6 and run the following "pip install -r requirements.txt" command to install all required packages.
 3. The dataset is already available in the directory, just update the path to the dataset in both .py files.
-4. Next, just hit the run button and the program will run.
+4. Next, just hit the run button, and the program will run.
 
 
 Acknowledgement
